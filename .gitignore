@@ -34,3 +34,7 @@ frontend/frontend/.vercel
 # typescript
 frontend/*.tsbuildinfo
 frontend/next-env.d.ts
+
+# strapi
+strapi/node_modules
+strapi/.tmp

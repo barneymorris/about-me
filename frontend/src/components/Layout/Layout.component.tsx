@@ -19,40 +19,6 @@ export const Layout: React.FC<Props> = ({ children }) => {
   const isHome = true;
   const [isLoading, setIsLoading] = useState(isHome);
 
-  // Sets target="_blank" rel="noopener noreferrer" on external links
-  const handleExternalLinks = () => {
-    const allLinks = Array.from(document.querySelectorAll("a"));
-    if (allLinks.length > 0) {
-      allLinks.forEach((link) => {
-        if (link.host !== window.location.host) {
-          link.setAttribute("rel", "noopener noreferrer");
-          link.setAttribute("target", "_blank");
-        }
-      });
-    }
-  };
-
-  useEffect(() => {
-    if (isLoading) {
-      return;
-    }
-
-    // TODO Need to understand what is that???
-
-    // if (location.hash) {
-    //   const id = location.hash.substring(1); // location.hash without the '#'
-    //   setTimeout(() => {
-    //     const el = document.getElementById(id);
-    //     if (el) {
-    //       el.scrollIntoView();
-    //       el.focus();
-    //     }
-    //   }, 0);
-    // }
-
-    handleExternalLinks();
-  }, [isLoading]);
-
   return (
     <>
       {/* TODO Here need to add seo info component */}

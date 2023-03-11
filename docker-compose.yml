@@ -1,0 +1,17 @@
+version: "3.7"
+services:
+  strapi:
+    container_name: strapi
+    restart: unless-stopped
+    build:
+      context: ./strapi
+      dockerfile: Dockerfile
+    volumes:
+      - strapi:/app
+      - /app/node_modules
+    ports:
+      - "1337:1337"
+
+volumes:
+  strapi:
+    driver: local
