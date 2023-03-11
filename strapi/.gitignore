@@ -60,29 +60,6 @@ $RECYCLE.BIN/
 *.out
 *.pid
 
-
-############################
-# Logs and databases
-############################
-
-.tmp
-*.log
-*.sql
-*.sqlite
-*.sqlite3
-
-
-############################
-# Misc.
-############################
-
-*#
-ssl
-.idea
-nbproject
-public/uploads/*
-!public/uploads/.gitkeep
-
 ############################
 # Node.js
 ############################
@@ -101,15 +78,3 @@ node_modules
 
 testApp
 coverage
-
-############################
-# Strapi
-############################
-
-.env
-license.txt
-exports
-*.cache
-dist
-build
-.strapi-updater.json
