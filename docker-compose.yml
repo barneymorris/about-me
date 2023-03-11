@@ -1,8 +1,11 @@
-version: "3.7"
+version: "3"
 services:
   strapi:
+    stdin_open: true
+    tty: true
     container_name: strapi
-    restart: unless-stopped
+    env_file:
+      - ./strapi/.env
     build:
       context: ./strapi
       dockerfile: Dockerfile

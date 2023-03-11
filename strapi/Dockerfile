@@ -3,6 +3,8 @@ FROM node:16.14.2
 # Set up the working directory that will be used to copy files/directories below :
 WORKDIR /app
 
+ARG APP_KEYS
+
 # Copy package.json to root directory inside Docker container of Strapi app
 COPY package.json .
 
@@ -13,4 +15,4 @@ RUN npm run build
 
 EXPOSE 1337
 
-CMD ["npm", "start"]
+CMD ["npm", "run", "develop"]
