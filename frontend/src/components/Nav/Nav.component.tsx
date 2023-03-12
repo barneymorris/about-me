@@ -9,8 +9,8 @@ import { CSSTransition, TransitionGroup } from "react-transition-group";
 import { StyledLinks, StyledHeader, StyledNav } from "./Nav.styled";
 import Menu from "../Menu/Menu.component";
 import { LanguageModal } from "../Modals/Language/Language.component";
-import { useSelector } from "react-redux";
-import { selectLangState } from "@/store/lang.slice";
+import { useRouter } from "next/router";
+import { useTranslation } from "next-i18next";
 
 // TODO Add it to strapi
 const navLinks = [
@@ -32,10 +32,11 @@ const navLinks = [
   },
 ];
 
-export const Nav: React.FC<Props> = ({ isHome }) => {
+export const Nav: React.FC<Props> = ({ isHome, nav, resumeLink }) => {
   const [isMounted, setIsMounted] = useState(!isHome);
   const [isLanguageModalOpened, setIsLanguageModalOpened] = useState(false);
-  const lang = useSelector(selectLangState);
+  const { locale } = useRouter();
+  const { t } = useTranslation("nav");
 
   const scrollDirection = useScrollDirection({ initialDirection: "down" });
   const [scrolledToTop, setScrolledToTop] = useState(true);
@@ -83,17 +84,13 @@ export const Nav: React.FC<Props> = ({ isHome }) => {
   const ResumeLink = (
     <a
       className="resume-button"
-      href="/resume.pdf"
+      href={`${process.env.STRAPI_HOST}${resumeLink.link}`}
       target="_blank"
       rel="noopener noreferrer"
     >
-      Resume
+      {t("Nav.Resume")}
     </a>
   );
-
-  useEffect(() => {
-    console.log("newlang", lang);
-  }, [lang]);
 
   return (
     <StyledHeader
@@ -117,7 +114,7 @@ export const Nav: React.FC<Props> = ({ isHome }) => {
               <div>{ResumeLink}</div>
             </StyledLinks>
 
-            <Menu />
+            <Menu nav={nav} />
           </>
         )}
 
@@ -140,7 +137,7 @@ export const Nav: React.FC<Props> = ({ isHome }) => {
                   />
 
                   <div onClick={() => setIsLanguageModalOpened(true)}>
-                    {lang.includes("ru") && (
+                    {locale?.includes("ru") && (
                       <div>
                         <img
                           className="flag"
@@ -150,7 +147,7 @@ export const Nav: React.FC<Props> = ({ isHome }) => {
                       </div>
                     )}
 
-                    {!lang.includes("ru") && (
+                    {!locale?.includes("ru") && (
                       <div>
                         <img className="flag" src="/images/usa.png" alt="usa" />
                       </div>
@@ -158,8 +155,8 @@ export const Nav: React.FC<Props> = ({ isHome }) => {
                   </div>
 
                   {isMounted &&
-                    navLinks &&
-                    navLinks.map(({ url, name }, i) => (
+                    nav?.data?.length &&
+                    nav?.data.map(({ attributes }, i) => (
                       <CSSTransition
                         key={i}
                         classNames={fadeDownClass}
@@ -171,7 +168,11 @@ export const Nav: React.FC<Props> = ({ isHome }) => {
                             transitionDelay: `${isHome ? i * 100 : 0}ms`,
                           }}
                         >
-                          <Link href={url}>{name}</Link>
+                          <Link href={attributes.anchor}>
+                            {locale === "ru"
+                              ? attributes.text_ru
+                              : attributes.text_en}
+                          </Link>
                         </li>
                       </CSSTransition>
                     ))}
@@ -198,7 +199,7 @@ export const Nav: React.FC<Props> = ({ isHome }) => {
             <TransitionGroup component={null}>
               {isMounted && (
                 <CSSTransition classNames={fadeClass} timeout={timeout}>
-                  <Menu />
+                  <Menu nav={nav} />
                 </CSSTransition>
               )}
             </TransitionGroup>

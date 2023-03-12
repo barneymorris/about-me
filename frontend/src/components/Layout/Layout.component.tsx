@@ -14,7 +14,7 @@ const StyledContent = styled.div`
   min-height: 100vh;
 `;
 
-export const Layout: React.FC<Props> = ({ children }) => {
+export const Layout: React.FC<Props> = ({ children, nav, resumeLink }) => {
   // TODO Remove hardcode here
   const isHome = true;
   const [isLoading, setIsLoading] = useState(isHome);
@@ -34,7 +34,7 @@ export const Layout: React.FC<Props> = ({ children }) => {
           <Loader finishLoading={() => setIsLoading(false)} />
         ) : (
           <StyledContent>
-            <Nav isHome={isHome} />
+            <Nav isHome={isHome} nav={nav} resumeLink={resumeLink} />
             <Social isHome={isHome} />
             <Email isHome={isHome} />
 

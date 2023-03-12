@@ -1,5 +1,7 @@
 import { KEY_CODES, srConfig } from "@/constants";
 import usePrefersReducedMotion from "@/hooks/usePrefersReducedMotion";
+import { TStrapiJobsMain } from "@/types/strapi.types";
+import { useRouter } from "next/router";
 import React, { useState, useEffect, useRef, useCallback } from "react";
 import { CSSTransition } from "react-transition-group";
 import {
@@ -11,85 +13,21 @@ import {
   StyledTabPanels,
 } from "./Jobs.styled";
 
-export const Jobs = () => {
-  // TODO Move it to Strapi
-  const jobsData = [
-    {
-      node: {
-        frontmatter: {
-          company: "MoySklad/Kladana",
-          title: "Senior Frontend Developer / Teamlead",
-          url: "https://www.moysklad.ru",
-          range: "March 2022 - Present",
-          list: [
-            "Creating complex kernel for microfrontend solution",
-            "Writing complex gitlab pipelines. Edit k8s configs. Get acquainted how deploy works. Deploy and escort this process to production",
-            "Become a mentor for several middle and junior developrs, was a team lead with 5+ developers",
-            "Get acquainted how microservices works in Java, written several microservices by myself",
-            "Rewrite legacy GWT (Java) code for React, instruct non-frontend developers how to do it",
-            "Internationalization some of React microfrontend service with react-i18-next for Indian users",
-          ],
-        },
-      },
-    },
+type Props = TStrapiJobsMain;
 
-    {
-      node: {
-        frontmatter: {
-          company: "SberAuto",
-          title: "Frontend Developer",
-          url: "https://www.sberauto.com",
-          range: "August 2021 - March 2022",
-          list: [
-            "Maintain and create components for modern CRM with React and Typescript",
-            "Create and integrate into company Storybook solution",
-            "Creating a complex form wizards, including this https://sberauto.com/sell_car_sberauto",
-            "Follow certain design system from designers. Pixel-perfect layout. Extends existing components",
-            "Inegreate Material UI framework for some services",
-            "Deep optimization for prevent rerendering components",
-          ],
-        },
-      },
-    },
-    {
-      node: {
-        frontmatter: {
-          company: "AnatomiyaSna",
-          title: "Frontend Developer",
-          url: "https://www.anatomiyasna.ru",
-          range: "October 2020 - August 2021",
-          list: [
-            "Write brand new journal site with news about anatomy of dreams, using Next.js and React",
-            "Rewirte a e-commerce site that has been written with 10k jQuery code in one single file to modern React + Next.js solituon. Increase speed of site loading with deep code optimization and analysis.",
-            "Integrate all of this stuff with API that has been written on PHP and Node.js",
-          ],
-        },
-      },
-    },
-    {
-      node: {
-        frontmatter: {
-          company: "Freelance",
-          title: "Freelance",
-          url: "https://www.freelance.ru",
-          range: "January 2019 - October 2020",
-          list: [
-            "Create HTML pages for customers",
-            "Hook up this HTML pages into Wordpress",
-            "Create web parsers for scaffoding infromation around the world",
-            "Create bots for Telegram",
-            "Create simple e-commerce sites with WooCommerce",
-          ],
-        },
-      },
-    },
-  ];
-
+export const Jobs: React.FC<Props> = ({
+  title_en,
+  title_ru,
+  jobs_en,
+  jobs_ru,
+  anchor,
+}) => {
   const [activeTabId, setActiveTabId] = useState(0);
   const [tabFocus, setTabFocus] = useState<number | null>(null);
   const tabs = useRef<HTMLButtonElement[]>([]);
   const revealContainer = useRef<HTMLDivElement>(null);
   const prefersReducedMotion = usePrefersReducedMotion();
+  const { locale } = useRouter();
 
   useEffect(() => {
     if (prefersReducedMotion) {
@@ -148,9 +86,27 @@ export const Jobs = () => {
     }
   };
 
+  type TJobsData = {
+    node: {
+      frontmatter: {
+        company: string;
+        list: string[];
+        range: string;
+        title: string;
+        url: string;
+      };
+    };
+  }[];
+
+  const jobsData = (locale === "ru"
+    ? jobs_ru
+    : jobs_en) as unknown as TJobsData;
+
   return (
-    <StyledJobsSection id="jobs" ref={revealContainer}>
-      <h2 className="numbered-heading">Where I’ve Worked</h2>
+    <StyledJobsSection id={anchor} ref={revealContainer}>
+      <h2 className="numbered-heading">
+        {locale === "ru" ? title_ru : title_en}
+      </h2>
 
       <div className="inner">
         <StyledTabList

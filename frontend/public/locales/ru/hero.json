@@ -1,5 +1,6 @@
 {
   "Hero": {
-    "NamePreambule": "Привет, меня зовут"
+    "NamePreambule": "Привет, меня зовут",
+    "ButtonText": "Хотите со мной связаться?"
   }
 }

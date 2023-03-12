@@ -8,6 +8,9 @@ import {
 import useOnClickOutside from "@/hooks/useOnClickOutside";
 import Link from "next/link";
 import { KEY_CODES } from "@/constants";
+import { useRouter } from "next/router";
+import { LanguageModal } from "../Modals/Language/Language.component";
+import { Props } from "./Menu.types";
 
 // TODO Move it to Strapi
 const navLinks = [
@@ -29,8 +32,10 @@ const navLinks = [
   },
 ];
 
-const Menu = () => {
+const Menu: React.FC<Props> = ({ nav }) => {
   const [menuOpen, setMenuOpen] = useState(false);
+  const { locale } = useRouter();
+  const [isLanguageModalOpened, setIsLanguageModalOpened] = useState(false);
 
   const toggleMenu = () => setMenuOpen(!menuOpen);
 
@@ -152,17 +157,43 @@ const Menu = () => {
           tabIndex={menuOpen ? 1 : -1}
         >
           <nav ref={navRef}>
-            {navLinks && (
+            {nav?.data?.length && (
               <ol>
-                {navLinks.map(({ url, name }, i) => (
+                {nav?.data?.map(({ attributes }, i) => (
                   <li key={i}>
-                    <Link href={url} onClick={() => setMenuOpen(false)}>
-                      {name}
+                    <Link
+                      href={attributes.anchor}
+                      onClick={() => setMenuOpen(false)}
+                    >
+                      {locale === "ru"
+                        ? attributes.text_ru
+                        : attributes.text_en}
                     </Link>
                   </li>
                 ))}
               </ol>
             )}
+
+            <div
+              onClick={() => setIsLanguageModalOpened(!isLanguageModalOpened)}
+            >
+              <LanguageModal
+                isOpen={isLanguageModalOpened}
+                onClose={() => setIsLanguageModalOpened(false)}
+              />
+
+              {locale?.includes("ru") && (
+                <div>
+                  <img className="flag" src="/images/russia.jpg" alt="russia" />
+                </div>
+              )}
+
+              {!locale?.includes("ru") && (
+                <div>
+                  <img className="flag" src="/images/usa.png" alt="usa" />
+                </div>
+              )}
+            </div>
 
             <a href="/resume.pdf" className="resume-link">
               Resume
