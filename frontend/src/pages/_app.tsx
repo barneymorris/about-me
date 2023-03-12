@@ -1,12 +1,14 @@
-import { useLanguage } from "@/hooks/useGetLanguage";
+import { useLanguage } from "@/hooks/useLanguage";
 import { GlobalStyle } from "@/styles/GlobalStyle";
 import { printDebugInfo } from "@/utils/printDebugInfo";
 import type { AppProps } from "next/app";
 import { useEffect } from "react";
 import { ThemeProvider } from "styled-components";
 import { theme } from "./../styles/theme";
+import { wrapper } from "./../store/store";
+import { appWithTranslation } from "next-i18next";
 
-export default function App({ Component, pageProps }: AppProps) {
+function App({ Component, pageProps }: AppProps) {
   useEffect(() => {
     printDebugInfo();
   }, []);
@@ -22,3 +24,5 @@ export default function App({ Component, pageProps }: AppProps) {
     </>
   );
 }
+
+export default wrapper.withRedux(appWithTranslation(App));

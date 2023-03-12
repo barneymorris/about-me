@@ -5,12 +5,12 @@ import { Hero } from "@/sections/Hero/Hero.section";
 import { Jobs } from "@/sections/Jobs/Jobs.section";
 import {
   TSrapiHeroMain,
-  TStrapiAllResponse,
   TStrapiHeroResponse,
   TStrapiTags,
 } from "@/types/strapi.types";
-import { AppContext } from "next/app";
 import styled from "styled-components";
+import { serverSideTranslations } from "next-i18next/serverSideTranslations";
+import { GetServerSideProps } from "next";
 
 const StyledMainContainer = styled.main`
   counter-reset: section;
@@ -20,13 +20,19 @@ type Props = {
   hero: TSrapiHeroMain;
 };
 
-const IndexPage: React.FC<Props> = ({ hero }) => {
-  console.log("hero", hero);
+const IndexPage: React.FC<Props> = (props) => {
+  console.log("props", props);
+  const { hero } = props;
 
   return (
     <Layout>
       <StyledMainContainer className="fillHeight">
-        <Hero name_ru={hero.name_ru} name_en={hero.name_en} />
+        <Hero
+          name_ru={hero.name_ru}
+          name_en={hero.name_en}
+          heading_en={hero.heading_en}
+          heading_ru={hero.heading_ru}
+        />
         <About />
         <Jobs />
         <Featured />
@@ -35,7 +41,7 @@ const IndexPage: React.FC<Props> = ({ hero }) => {
   );
 };
 
-export async function getServerSideProps(ctx: AppContext) {
+export const getServerSideProps: GetServerSideProps = async ({ locale }) => {
   const urls = [
     {
       url: `${process.env.STRAPI_HOST}/api/hero`,
@@ -56,9 +62,10 @@ export async function getServerSideProps(ctx: AppContext) {
 
   return {
     props: {
+      ...(await serverSideTranslations(locale as string, ["common", "hero"])),
       hero: response.Hero,
     },
   };
-}
+};
 
 export default IndexPage;

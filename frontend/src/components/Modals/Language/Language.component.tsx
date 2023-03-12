@@ -1,5 +1,4 @@
-import { Icon } from "@/components/Icon/Icon.component";
-import { useLanguage } from "@/hooks/useGetLanguage";
+import { useLanguage } from "@/hooks/useLanguage";
 import React from "react";
 import { StyledList, StyledModal } from "./Language.styled";
 
@@ -16,7 +15,7 @@ export const LanguageModal: React.FC<Props> = ({ isOpen, onClose }) => {
       <StyledList>
         <div
           onClick={() => {
-            setLanguage("ru-RU");
+            setLanguage("ru");
             onClose();
           }}
         >
@@ -25,7 +24,7 @@ export const LanguageModal: React.FC<Props> = ({ isOpen, onClose }) => {
 
         <div
           onClick={() => {
-            setLanguage("en-US");
+            setLanguage("en");
             onClose();
           }}
         >

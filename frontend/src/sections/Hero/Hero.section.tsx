@@ -1,15 +1,26 @@
 import { loaderDelay, navDelay } from "@/constants";
 import usePrefersReducedMotion from "@/hooks/usePrefersReducedMotion";
+import { selectLangState } from "@/store/lang.slice";
+import { TSrapiHeroMain } from "@/types/strapi.types";
 import React, { useState, useEffect } from "react";
+import { useSelector } from "react-redux";
 import { CSSTransition, TransitionGroup } from "react-transition-group";
 import { StyledHeroSection } from "./Hero.styled";
+import { useTranslation } from "next-i18next";
+import { useRouter } from "next/router";
 
-type Props = {
-  name_ru: string;
-  name_en: string;
-};
+type Props = TSrapiHeroMain;
 
-export const Hero: React.FC<Props> = ({ name_en, name_ru }) => {
+export const Hero: React.FC<Props> = ({
+  name_en,
+  name_ru,
+  heading_en,
+  heading_ru,
+}) => {
+  const lang = useSelector(selectLangState);
+  const { t } = useTranslation("hero");
+  const { locale } = useRouter();
+
   const [isMounted, setIsMounted] = useState(false);
   const prefersReducedMotion = usePrefersReducedMotion();
 
@@ -22,9 +33,15 @@ export const Hero: React.FC<Props> = ({ name_en, name_ru }) => {
     return () => clearTimeout(timeout);
   }, [prefersReducedMotion]);
 
-  const one = <h1>Hi, my name is</h1>;
-  const two = <h2 className="big-heading">Brittany Chiang.</h2>;
-  const three = <h3 className="big-heading">I build things for the web.</h3>;
+  const one = <h1>{t("Hero.NamePreambule")}</h1>;
+  const two = (
+    <h2 className="big-heading">{lang === "ru-RU" ? name_ru : name_en}</h2>
+  );
+  const three = (
+    <h3 className="big-heading">
+      {lang === "ru-RU" ? heading_ru : heading_en}
+    </h3>
+  );
   const four = (
     <>
       <p>

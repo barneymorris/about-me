@@ -7,6 +7,8 @@ export type TStrapiAdditionalInfo = {
 export type TSrapiHeroMain = {
   name_ru: string;
   name_en: string;
+  heading_ru: string;
+  heading_en: string;
 };
 
 export type TStrapiHeroResponse = {

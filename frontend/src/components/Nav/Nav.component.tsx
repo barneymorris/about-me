@@ -8,9 +8,9 @@ import { Props } from "./Nav.types";
 import { CSSTransition, TransitionGroup } from "react-transition-group";
 import { StyledLinks, StyledHeader, StyledNav } from "./Nav.styled";
 import Menu from "../Menu/Menu.component";
-import { Icon } from "../Icon/Icon.component";
 import { LanguageModal } from "../Modals/Language/Language.component";
-import { useLanguage } from "@/hooks/useGetLanguage";
+import { useSelector } from "react-redux";
+import { selectLangState } from "@/store/lang.slice";
 
 // TODO Add it to strapi
 const navLinks = [
@@ -35,13 +35,11 @@ const navLinks = [
 export const Nav: React.FC<Props> = ({ isHome }) => {
   const [isMounted, setIsMounted] = useState(!isHome);
   const [isLanguageModalOpened, setIsLanguageModalOpened] = useState(false);
+  const lang = useSelector(selectLangState);
 
   const scrollDirection = useScrollDirection({ initialDirection: "down" });
   const [scrolledToTop, setScrolledToTop] = useState(true);
   const prefersReducedMotion = usePrefersReducedMotion();
-
-  const { getLanguage } = useLanguage();
-  const lang = getLanguage();
 
   const handleScroll = () => {
     setScrolledToTop(window.pageYOffset < 50);
@@ -93,6 +91,10 @@ export const Nav: React.FC<Props> = ({ isHome }) => {
     </a>
   );
 
+  useEffect(() => {
+    console.log("newlang", lang);
+  }, [lang]);
+
   return (
     <StyledHeader
       scrollDirection={scrollDirection}
@@ -138,7 +140,7 @@ export const Nav: React.FC<Props> = ({ isHome }) => {
                   />
 
                   <div onClick={() => setIsLanguageModalOpened(true)}>
-                    {lang === "ru-RU" && (
+                    {lang.includes("ru") && (
                       <div>
                         <img
                           className="flag"
@@ -148,7 +150,7 @@ export const Nav: React.FC<Props> = ({ isHome }) => {
                       </div>
                     )}
 
-                    {lang !== "ru-RU" && (
+                    {!lang.includes("ru") && (
                       <div>
                         <img className="flag" src="/images/usa.png" alt="usa" />
                       </div>
