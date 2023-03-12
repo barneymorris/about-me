@@ -5,21 +5,37 @@ import { IconHabr } from "./Habr/Habr.component";
 import { IconTelegram } from "./Telegram/Telegram.component";
 import { IconGitHub } from "./Github/Github.component";
 
-export const Icon: React.FC<Props> = ({ name }) => {
+export const Icon: React.FC<Props> = ({ name, onClick }) => {
   switch (name) {
     case "HabrCareer": {
-      return <IconHabr />;
+      return (
+        <div onClick={onClick}>
+          <IconHabr />
+        </div>
+      );
     }
 
     case "Telegram": {
-      return <IconTelegram />;
+      return (
+        <div onClick={onClick}>
+          <IconTelegram />
+        </div>
+      );
     }
 
     case "Github": {
-      return <IconGitHub />;
+      return (
+        <div onClick={onClick}>
+          <IconGitHub />
+        </div>
+      );
     }
 
     default:
-      return <External />;
+      return (
+        <div onClick={onClick}>
+          <External />
+        </div>
+      );
   }
 };

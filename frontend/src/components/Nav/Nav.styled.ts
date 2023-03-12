@@ -54,6 +54,11 @@ export const StyledNav = styled.nav`
   counter-reset: item 0;
   z-index: 12;
 
+  .flag {
+    display: block;
+    width: 40px;
+  }
+
   .logo {
     ${({ theme }) => theme.mixins.flexCenter};
 

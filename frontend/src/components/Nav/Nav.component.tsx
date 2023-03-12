@@ -8,6 +8,9 @@ import { Props } from "./Nav.types";
 import { CSSTransition, TransitionGroup } from "react-transition-group";
 import { StyledLinks, StyledHeader, StyledNav } from "./Nav.styled";
 import Menu from "../Menu/Menu.component";
+import { Icon } from "../Icon/Icon.component";
+import { LanguageModal } from "../Modals/Language/Language.component";
+import { useLanguage } from "@/hooks/useGetLanguage";
 
 // TODO Add it to strapi
 const navLinks = [
@@ -31,9 +34,14 @@ const navLinks = [
 
 export const Nav: React.FC<Props> = ({ isHome }) => {
   const [isMounted, setIsMounted] = useState(!isHome);
+  const [isLanguageModalOpened, setIsLanguageModalOpened] = useState(false);
+
   const scrollDirection = useScrollDirection({ initialDirection: "down" });
   const [scrolledToTop, setScrolledToTop] = useState(true);
   const prefersReducedMotion = usePrefersReducedMotion();
+
+  const { getLanguage } = useLanguage();
+  const lang = getLanguage();
 
   const handleScroll = () => {
     setScrolledToTop(window.pageYOffset < 50);
@@ -124,6 +132,29 @@ export const Nav: React.FC<Props> = ({ isHome }) => {
             <StyledLinks>
               <ol>
                 <TransitionGroup component={null}>
+                  <LanguageModal
+                    isOpen={isLanguageModalOpened}
+                    onClose={() => setIsLanguageModalOpened(false)}
+                  />
+
+                  <div onClick={() => setIsLanguageModalOpened(true)}>
+                    {lang === "ru-RU" && (
+                      <div>
+                        <img
+                          className="flag"
+                          src="/images/russia.jpg"
+                          alt="russia"
+                        />
+                      </div>
+                    )}
+
+                    {lang !== "ru-RU" && (
+                      <div>
+                        <img className="flag" src="/images/usa.png" alt="usa" />
+                      </div>
+                    )}
+                  </div>
+
                   {isMounted &&
                     navLinks &&
                     navLinks.map(({ url, name }, i) => (

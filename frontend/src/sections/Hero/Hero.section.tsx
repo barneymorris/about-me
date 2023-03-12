@@ -4,7 +4,12 @@ import React, { useState, useEffect } from "react";
 import { CSSTransition, TransitionGroup } from "react-transition-group";
 import { StyledHeroSection } from "./Hero.styled";
 
-export const Hero = () => {
+type Props = {
+  name_ru: string;
+  name_en: string;
+};
+
+export const Hero: React.FC<Props> = ({ name_en, name_ru }) => {
   const [isMounted, setIsMounted] = useState(false);
   const prefersReducedMotion = usePrefersReducedMotion();
 

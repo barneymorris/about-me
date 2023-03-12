@@ -8,4 +8,8 @@ module.exports = require("next-fonts")({
   images: {
     domains: ["www.ixbt.com"],
   },
+
+  env: {
+    STRAPI_HOST: "http://151.248.114.166:1337",
+  },
 });
