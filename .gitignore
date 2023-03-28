@@ -37,3 +37,9 @@ frontend/next-env.d.ts
 
 # strapi
 strapi/node_modules
+strapi/.tmp
+strapi/*.log
+strapi/*.sql
+strapi/!.github/workflows/db/**/*.sql
+strapi/*.sqlite
+strapi/.cache

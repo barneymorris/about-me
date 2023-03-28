@@ -1,0 +1,37 @@
+{
+  "kind": "collectionType",
+  "collectionName": "features",
+  "info": {
+    "singularName": "feature",
+    "pluralName": "features",
+    "displayName": "Feature",
+    "description": ""
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "img": {
+      "type": "string"
+    },
+    "project_title_ru": {
+      "type": "string"
+    },
+    "project_title_en": {
+      "type": "string"
+    },
+    "link": {
+      "type": "string"
+    },
+    "project_description_ru": {
+      "type": "string"
+    },
+    "project_description_en": {
+      "type": "string"
+    },
+    "skills": {
+      "type": "json"
+    }
+  }
+}

@@ -1,0 +1,33 @@
+{
+  "kind": "collectionType",
+  "collectionName": "projects",
+  "info": {
+    "singularName": "project",
+    "pluralName": "projects",
+    "displayName": "Project"
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "desc_ru": {
+      "type": "string"
+    },
+    "desc_en": {
+      "type": "string"
+    },
+    "title_ru": {
+      "type": "string"
+    },
+    "title_en": {
+      "type": "string"
+    },
+    "tech": {
+      "type": "json"
+    },
+    "github": {
+      "type": "string"
+    }
+  }
+}

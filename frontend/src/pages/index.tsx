@@ -15,10 +15,18 @@ import {
   TStrapiNavMain,
   TStrapiNavResponse,
   TStrapiResumeLinkMain,
+  TStrapiSocialsResponse,
+  TStrapiSocialsMain,
+  TStrapiProjectsMain,
+  TStrapiProjectsResponse,
 } from "@/types/strapi.types";
 import styled from "styled-components";
 import { serverSideTranslations } from "next-i18next/serverSideTranslations";
 import { GetServerSideProps } from "next";
+import { Projects } from "@/sections/Projects/Projects.component";
+import { Contact } from "@/sections/Contact/Contact.component";
+import Head from "next/head";
+import { useRouter } from "next/router";
 
 const StyledMainContainer = styled.main`
   counter-reset: section;
@@ -31,21 +39,44 @@ type Props = {
   features: TStrapiFeaturesResponse;
   nav: TStrapiNavResponse;
   resumeLink: TStrapiResumeLinkMain;
+  socials: TStrapiSocialsMain;
+  projects: TStrapiProjectsResponse;
 };
 
 const IndexPage: React.FC<Props> = (props) => {
-  console.log("props", props);
-  const { hero, about, jobs, features, nav, resumeLink } = props;
+  const { hero, about, jobs, features, nav, resumeLink, socials, projects } =
+    props;
+
+  const { locale } = useRouter();
+
+  const title =
+    locale === "ru"
+      ? "Борис Сырпин | Fullstack разработчик "
+      : "Boris Syrpin | Fullstack Developer";
+
+  const desc =
+    locale === "ru"
+      ? "Привет! Я Борис Сырпин и я фулстэк React разработчик. Ищете в компанию фротендера/бэкэндера? Напишите мне!"
+      : "Hello, I'm Boris Syrpin. You are looking for frontend/backend developer? Contact me!";
 
   return (
-    <Layout nav={nav} resumeLink={resumeLink}>
-      <StyledMainContainer className="fillHeight">
-        <Hero {...hero} />
-        <About {...about} />
-        <Jobs {...jobs} />
-        <Featured data={features.data} />
-      </StyledMainContainer>
-    </Layout>
+    <>
+      <Head>
+        <title>{title}</title>
+        <meta name="description" content={desc} />
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
+      </Head>
+      <Layout nav={nav} resumeLink={resumeLink} socials={socials}>
+        <StyledMainContainer className="fillHeight">
+          <Hero {...hero} />
+          <About {...about} />
+          <Jobs {...jobs} />
+          <Featured data={features.data} />
+          <Projects projects={projects} />
+          <Contact email={socials.email} />
+        </StyledMainContainer>
+      </Layout>
+    </>
   );
 };
 
@@ -75,6 +106,14 @@ export const getServerSideProps: GetServerSideProps = async ({ locale }) => {
       url: `${process.env.STRAPI_HOST}/api/resume-link`,
       tag: "ResumeLink",
     },
+    {
+      url: `${process.env.STRAPI_HOST}/api/social`,
+      tag: "Socials",
+    },
+    {
+      url: `${process.env.STRAPI_HOST}/api/projects`,
+      tag: "Projects",
+    },
   ];
 
   const response = {} as TStrapiTags;
@@ -88,9 +127,15 @@ export const getServerSideProps: GetServerSideProps = async ({ locale }) => {
         | TStrapiAboutResponse
         | TStrapiJobsMain
         | TStrapiFeaturesMain
-        | TStrapiNavMain;
+        | TStrapiNavMain
+        | TStrapiSocialsResponse
+        | TStrapiProjectsMain;
 
-      if (item.tag !== "Features" && item.tag !== "Nav") {
+      if (
+        item.tag !== "Features" &&
+        item.tag !== "Nav" &&
+        item.tag !== "Projects"
+      ) {
         // @ts-ignore
         response[item.tag] = parsed.data.attributes;
       } else {
@@ -108,6 +153,8 @@ export const getServerSideProps: GetServerSideProps = async ({ locale }) => {
         "about",
         "featured",
         "nav",
+        "projects",
+        "contact",
       ])),
       hero: response.Hero,
       about: response.About,
@@ -115,6 +162,8 @@ export const getServerSideProps: GetServerSideProps = async ({ locale }) => {
       features: response.Features,
       nav: response.Nav,
       resumeLink: response.ResumeLink,
+      socials: response.Socials,
+      projects: response.Projects,
     },
   };
 };

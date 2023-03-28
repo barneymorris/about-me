@@ -1,0 +1,18 @@
+{
+  "kind": "singleType",
+  "collectionName": "resume_links",
+  "info": {
+    "singularName": "resume-link",
+    "pluralName": "resume-links",
+    "displayName": "resume-link"
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "link": {
+      "type": "string"
+    }
+  }
+}

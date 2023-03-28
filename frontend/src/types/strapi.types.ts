@@ -50,6 +50,28 @@ export type TStrapiResumeLinkMain = {
   link: string;
 };
 
+export type TStrapiSocialsMain = {
+  email: string;
+  socials: {
+    name: string;
+    url: string;
+  }[];
+};
+
+export type TStrapiProjectMainItem = {
+  title_ru: string;
+  title_en: string;
+  desc_ru: string;
+  desc_en: string;
+  tech: string[];
+  github: string;
+};
+
+export type TStrapiProjectsMain = {
+  id: number;
+  attributes: TStrapiProjectMainItem & TStrapiAdditionalInfo;
+};
+
 export type TStrapiHeroResponse = {
   data: {
     id: number;
@@ -78,10 +100,24 @@ export type TStrapiResumeLinkResponse = {
   };
 };
 
+export type TStrapiProjectsResponse = {
+  data: {
+    id: number;
+    attributes: TStrapiProjectsMain & TStrapiAdditionalInfo;
+  }[];
+};
+
 export type TStrapiFeaturesResponse = {
   data: {
     id: number;
     attributes: TStrapiFeaturesMain & TStrapiAdditionalInfo;
+  }[];
+};
+
+export type TStrapiSocialsResponse = {
+  data: {
+    id: number;
+    attributes: TStrapiSocialsMain & TStrapiAdditionalInfo;
   }[];
 };
 
@@ -108,4 +144,6 @@ export type TStrapiTags = {
   Features: TStrapiFeaturesMain;
   Nav: TStrapiNavMain;
   ResumeLink: TStrapiResumeLinkMain;
+  Socials: TStrapiSocialsMain;
+  Projects: TStrapiProjectsMain;
 };

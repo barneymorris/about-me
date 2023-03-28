@@ -7,7 +7,7 @@ module.exports = require("next-fonts")({
   },
 
   env: {
-    STRAPI_HOST: "http://151.248.114.166:1337",
+    STRAPI_HOST: "http://localhost:1337",
   },
 
   i18n,

@@ -1,0 +1,31 @@
+{
+  "kind": "singleType",
+  "collectionName": "jobs",
+  "info": {
+    "singularName": "job",
+    "pluralName": "jobs",
+    "displayName": "Job",
+    "description": ""
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "title_ru": {
+      "type": "string"
+    },
+    "title_en": {
+      "type": "string"
+    },
+    "jobs_ru": {
+      "type": "json"
+    },
+    "jobs_en": {
+      "type": "json"
+    },
+    "anchor": {
+      "type": "string"
+    }
+  }
+}
