@@ -1,20 +1,10 @@
+# TODO Write Docker-compose for strapi
+
 version: "3"
 services:
-  strapi:
-    stdin_open: true
-    tty: true
-    container_name: strapi
-    env_file:
-      - ./strapi/.env
-    build:
-      context: ./strapi
-      dockerfile: Dockerfile
-    volumes:
-      - strapi:/app
-      - /app/node_modules
+  nextjs:
+    build: ./frontend
+  nginx:
+    build: ./frontend/nginx
     ports:
-      - "1337:1337"
-
-volumes:
-  strapi:
-    driver: local
+      - 80:80

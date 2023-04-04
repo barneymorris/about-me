@@ -1,7 +1,7 @@
 import {
   TStrapiNavResponse,
   TStrapiResumeLinkMain,
-  TSTrapiSocialsMain,
+  TStrapiSocialsMain,
 } from "@/types/strapi.types";
 import React from "react";
 
@@ -9,5 +9,5 @@ export type Props = {
   children: React.ReactNode;
   nav: TStrapiNavResponse;
   resumeLink: TStrapiResumeLinkMain;
-  socials: TSTrapiSocialsMain;
+  socials: TStrapiSocialsMain;
 };
