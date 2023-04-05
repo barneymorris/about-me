@@ -50,7 +50,7 @@ export const Hero: React.FC<Props> = ({
   );
 
   const five = (
-    <a className="email-link" href="#contact">
+    <a className="email-link" href="#contacts">
       {t("Hero.ButtonText")}
     </a>
   );

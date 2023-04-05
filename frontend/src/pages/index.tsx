@@ -81,6 +81,8 @@ const IndexPage: React.FC<Props> = (props) => {
 };
 
 export const getServerSideProps: GetServerSideProps = async ({ locale }) => {
+  console.log("==== DEBUG", `${process.env.STRAPI_HOST}/api/hero`);
+
   const urls = [
     {
       url: `${process.env.STRAPI_HOST}/api/hero`,
