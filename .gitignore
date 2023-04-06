@@ -43,3 +43,7 @@ strapi/*.sql
 strapi/!.github/workflows/db/**/*.sql
 strapi/*.sqlite
 strapi/.cache
+
+# private
+certs
+enviroment

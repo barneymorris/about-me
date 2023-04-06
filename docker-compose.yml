@@ -1,10 +1,23 @@
-# TODO Write Docker-compose for strapi
-
-version: "3"
+version: "3.9"
 services:
   nextjs:
     build: ./frontend
-  nginx:
-    build: ./frontend/nginx
     ports:
-      - 80:80
+      - 3000:3000
+  # nginx:
+  # build: ./frontend/nginx
+  # restart: unless-stopped
+  # ports:
+  # - 80:80
+  # - 443:443
+  # TODO
+  # volumes:
+  # - ./certs/syrpinboris.crt:/etc/ssl/syrpinboris.crt
+  # - ./certs/syrpinboris.key:/etc/ssl/syrpinboris.key
+  strapi:
+    build: ./strapi
+    # TODO
+    # volumes:
+    #   - ./enviroment/strapi/.env:./.env
+    ports:
+      - 1337:1337
