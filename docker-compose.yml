@@ -4,20 +4,18 @@ services:
     build: ./frontend
     ports:
       - 3000:3000
-  # nginx:
-  # build: ./frontend/nginx
-  # restart: unless-stopped
-  # ports:
-  # - 80:80
-  # - 443:443
-  # TODO
-  # volumes:
-  # - ./certs/syrpinboris.crt:/etc/ssl/syrpinboris.crt
-  # - ./certs/syrpinboris.key:/etc/ssl/syrpinboris.key
+  nginx:
+    build: ./frontend/nginx
+    restart: unless-stopped
+    ports:
+      - 80:80
+      - 8080:8080
+      - 3001:3001
+      - 443:443
+    volumes:
+      - ./enviroment/certs/syrpinboris.crt:/etc/ssl/syrpinboris.crt
+      - ./enviroment/certs/syrpinboris.key:/etc/ssl/syrpinboris.key
   strapi:
     build: ./strapi
-    # TODO
-    # volumes:
-    #   - ./enviroment/strapi/.env:./.env
     ports:
       - 1337:1337

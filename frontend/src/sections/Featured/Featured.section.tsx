@@ -102,7 +102,7 @@ export const Featured: React.FC<Props> = ({ data }) => {
                     rel="noopener noreferrer"
                   >
                     <img
-                      src={`${process.env.STRAPI_HOST}${attributes.img}`}
+                      src={`${process.env.STRAPI_ASSETS_HOST}${attributes.img}`}
                       alt={
                         locale === "ru"
                           ? attributes.project_title_ru

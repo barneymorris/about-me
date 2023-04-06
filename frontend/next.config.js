@@ -8,6 +8,7 @@ module.exports = require("next-fonts")({
 
   env: {
     STRAPI_HOST: "http://syrpinboris.ru:1337",
+    STRAPI_ASSETS_HOST: "http://syrpinboris.ru",
   },
 
   i18n,
